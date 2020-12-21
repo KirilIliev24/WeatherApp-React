@@ -17,14 +17,15 @@ class App extends Component {
   }
 
   async componentDidMount() {
-      await axios
+
+    await axios
         .get(
-          `${Api.baseURL}/weather?q=${Api.place}&units=metric&cnt=5&appid=${Api.apiKey}`
+          `${Api.baseURL}/forecast?q=${Api.place}&units=metric&appid=${Api.apiKey}`
         )
         .then((result) => {
-          const data = result.data;
+          const data = result.data.list;
           this.setState({
-            weather: [data] 
+            weather: data 
           });
         })
         .catch((error) => console.log(error));
@@ -35,7 +36,7 @@ class App extends Component {
       <div>
          <Header></Header>
          <div className = "container">
-          <WeatherList weather = {this.state.weather}></WeatherList>
+          {/* <WeatherList weather = {this.state.weather}></WeatherList> */}
         </div>
       </div>
     );
