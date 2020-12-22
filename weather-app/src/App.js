@@ -13,11 +13,12 @@ const Api = {
 
 class App extends Component {
   state = {
-    weather: []
+    weather: [],
+    dataByday:[],
+    tempData:[]
   }
 
   async componentDidMount() {
-
     await axios
         .get(
           `${Api.baseURL}/forecast?q=${Api.place}&units=metric&appid=${Api.apiKey}`
@@ -29,14 +30,34 @@ class App extends Component {
           });
         })
         .catch((error) => console.log(error));
+        this.filterData();
   }
 
+  filterData = () => {
+
+    
+    const noofDays = this.state.weather.length / 8;
+    var index = 0;
+    for(var i = 0; i < noofDays; i++)
+    {
+      do
+      {
+        var currentDate = this.state.weather[index].dt_txt.split(" ");
+        var nextDate = this.state.weather[index + 1].dt_txt.split(" ");
+        this.setState({ tempData: [...this.state.tempData, this.state.weather[index]]});
+        index++;
+      }
+      while(currentDate[0] === nextDate[0]);
+      this.setState({ dataByday: [...this.state.dataByday, this.state.tempData]});
+      this.setState({ tempData: []});
+    }
+  };
   render(){
     return (
       <div>
          <Header></Header>
          <div className = "container">
-          {/* <WeatherList weather = {this.state.weather}></WeatherList> */}
+          <WeatherList weatherByday = {this.state.dataByday}></WeatherList>
         </div>
       </div>
     );
