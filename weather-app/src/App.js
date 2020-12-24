@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 const Api = {
-  place: "Sofia",
+  place: "Kozloduy",
   apiKey: "4d60381267f87c75c0d2fe785bfcba24",
   baseURL: "https://api.openweathermap.org/data/2.5/",
 };
@@ -16,6 +16,7 @@ class App extends Component {
     weather: [],
     dataByday: [],
     firstMeasurments: [],
+    weatherByHour: [],
     tempData: []
   }
 
@@ -59,12 +60,50 @@ class App extends Component {
       this.setState({ firstMeasurments: [...this.state.firstMeasurments, this.state.dataByday[i][0]]});
     }
   }
+
+  getWeatherByHour = (date) =>{
+      var chosenArray = [];
+    // const {dataByday} = this.state.dataByday;
+    // for(var i = 0; i < this.state.dataByday.lenght; i++)
+    // {
+    //   for(var j = 0; j < dataByday[i].lenght; j++)
+    //     {
+    //       var spliteDate = dataByday[i][j].dt_txt.split(" ");
+    //       var dateOnly = spliteDate[0];
+    //       if(dateOnly === date)
+    //       {
+    //           chosenArray = dataByday[i];
+    //           return  0;
+    //       }
+    //     }
+    // }
+    this.state.dataByday.map(dayArray => {
+      dayArray.map( hourObject => {
+        var spliteDate = hourObject.dt_txt.split(" ");
+        var dateOnly = spliteDate[0];
+        if(dateOnly === date)
+        {
+            chosenArray = dayArray;
+            return this.setState({ weatherByHour: chosenArray});
+        }
+        return 0;
+      })
+      return 0;
+    });
+    console.log(date);
+  }
+
   render(){
     return (
       <div>
          <Header></Header>
          <div className = "container">
-          <WeatherList weatherByday = {this.state.firstMeasurments}></WeatherList>
+          <WeatherList 
+            weatherByday = {this.state.firstMeasurments} 
+            getWeatherByHour = {this.getWeatherByHour}
+            weatherByHour = {this.state.weatherByHour}
+            >
+            </WeatherList>
         </div>
       </div>
     );

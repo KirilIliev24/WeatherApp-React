@@ -24,9 +24,8 @@ export default class WeatherItem extends Component {
         const {dt_txt} = this.props.weatherItem;
         const {temp, humidity} = this.props.weatherItem.main;
         const {icon, description} = this.props.weatherItem.weather[0];
-        // const {id} = this.props.id;
         return (
-            <div className = "centerText" onClick = {this.props.getWeatherByHour.bind(this, this.getDateOnly(dt_txt))}>
+            <div className = "centerText">
                     <div>
                         <div><h5>{this.getDayOfWeek(dt_txt)}</h5></div>
                         <div>{temp} &deg;C</div>
