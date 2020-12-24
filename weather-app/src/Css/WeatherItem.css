@@ -1,4 +1,9 @@
 .centerText{
     display: inline-block;
     text-align: center;
+    padding: 5px;
+}
+
+#description{
+    font-size: small;
 }

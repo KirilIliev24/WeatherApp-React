@@ -14,8 +14,9 @@ const Api = {
 class App extends Component {
   state = {
     weather: [],
-    dataByday:[],
-    tempData:[]
+    dataByday: [],
+    firstMeasurments: [],
+    tempData: []
   }
 
   async componentDidMount() {
@@ -31,11 +32,10 @@ class App extends Component {
         })
         .catch((error) => console.log(error));
         this.filterData();
+        this.getFirstMeasurments();
   }
 
   filterData = () => {
-
-    
     const noofDays = this.state.weather.length / 8;
     var index = 0;
     for(var i = 0; i < noofDays; i++)
@@ -52,12 +52,19 @@ class App extends Component {
       this.setState({ tempData: []});
     }
   };
+
+  getFirstMeasurments(){
+    for(var i = 0; i < this.state.dataByday.length; i++)
+    {
+      this.setState({ firstMeasurments: [...this.state.firstMeasurments, this.state.dataByday[i][0]]});
+    }
+  }
   render(){
     return (
       <div>
          <Header></Header>
          <div className = "container">
-          <WeatherList weatherByday = {this.state.dataByday}></WeatherList>
+          <WeatherList weatherByday = {this.state.firstMeasurments}></WeatherList>
         </div>
       </div>
     );

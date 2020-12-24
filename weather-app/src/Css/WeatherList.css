@@ -1,7 +1,8 @@
 .centerItems{
     margin: auto;
     margin-top: 20px;
-    width: 105px;
+    width: 120px;
+    height: 210px;
     border: 1px solid gray;
     padding: 1px;
 }
